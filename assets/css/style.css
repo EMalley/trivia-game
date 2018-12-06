@@ -1,4 +1,4 @@
-/* body {
+body {
     background-image:url(../images/Background.jpg);
     background-size: 100%;
     background-repeat: no-repeat;
@@ -11,14 +11,18 @@
 }
 
 
-.buttons {
+.userchoices {
     border-radius: 10px;
     block-size: auto;
-    background-color: #fff;
     border: none;
     display: inherit;
+    cursor: pointer;
 }
 
-.buttons:hover{
-    background-color: #adb6a2;
-} */
+.userchoices:hover{
+    background-color: #fbbc05;
+}
+
+#questionBank {
+    font-size:26px;
+}

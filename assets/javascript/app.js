@@ -5,38 +5,37 @@ $(document).ready(function () {
         {
             question: "What is the only snake in the world that builds a nest for its eggs?",
             choices: ["king Cobra", "Gater Snake", "Rattle Snake", "Water Moccasin"],
-            answer: 0
+            answer: "King Cobra"
             // photo: //insert photo
 
         },
         {
             question: "What is the only mammal born with horns?",
             choices: ["Rhino", "Rams", "Giraffe", "All of these"],
-            answer: 2
+            answer: "Giraffe"
 
         },
         {
             question: "What flightless bird is featured on New Zealand's one dollar coin?",
             choices: ["Dodo", "Emu", "Ostrich", "Kiwi"],
-            answer: 3
+            answer: "Kiwi"
 
         },
         {
             question: "Which of these repiles is known as the worlds largest lizard",
             choices: ["Aligator", "Komoto Dragon", "Crocodile", "Bearded Dragon"],
-            answer: 1
+            answer: "Komoto Dragon"
         },
     ];
     // variables for Trivia Game
     var correctAnswers = 0;
     var incorrectAnswers = 0;
     var unanswered = 0;
-    var timer = 20;
+    var timer = 10;
     var intervalId;
     var userGuess = "";
     var running = false;
     var questionCount = questions.length;
-    var pick;
     var index;
     var newArray = [];
     var holder = [];
@@ -46,7 +45,8 @@ $(document).ready(function () {
     $("#start").on("click", function () {
         $("#start").hide();
         displayQuestion();
-        // runTimer();
+        runTimer();
+        running = true;
         // Make questions appear into HTML document
         for (i = 0; i < questions.length; i++); {
             holder.push(questions[i]);
@@ -54,27 +54,27 @@ $(document).ready(function () {
     });
 
     // countdown timer
-    function decrement() {
-        $("#countdown").html("<h3>Time Remaining: " + timer + "</h3>");
-        timer--;
-        // stop when timer hits 0
-        if (timer === 0) {
-            unanswered++;
-            stop();
-            $("#answerBank").html("<p>Time's Up! The correct answer is: " + pick.choices[pick.answer] + "</p>");
-            // hidePicture
-        }
-        // timer stop and clear
-        function stopTime() {
-            running = false;
-            clearInterval(intervalId);
-        }
-
+    function runTimer() {
+        clearInterval(intervalId);
+        intervalId = setInterval(decrement, 1000);
     }
+    function decrement() {
+        timer--;
+        $("#countdown").html("<h2>" + timer + "<h2>");
+        if (timer === 0) {
+            stop();
+            $("#countdown").html("<h2>Time's up! <br> The corret answer is: " + questions[index].answer + "<h2>" + "<hr>");
+        }
+        function stop() {
+            clearInterval(intervalId);
+
+        }
+    }
+
+    // writes the question to the DOM
     function displayQuestion() {
         index = Math.floor(Math.random() * questions.length);
-        // pick = questions[index];
-        $("#questionBank").html(questions[index].question); console.log(questions[index].question);
+        $("#questionBank").html(questions[index].question); //console.log(questions[index].question);
         for (var i = 0; i < questions[index].choices.length; i++) {
             var userChoice = $("<div>");
             userChoice.attr("class", "userChoices");
@@ -84,6 +84,24 @@ $(document).ready(function () {
             $("#answerBank").append(userChoice);
         }
     };
+
+    // onclick functions for answers
+    // grab userchoices
+    $("data-guessvaule").on("click", function () {
+        // write correct response
+        if (userGuess === questions[index].answer) {
+            correctAnswers++;
+            stop(); //stops the timer
+            $("#answerBank").html("<h2> Correct! <h2>");
+        }
+        else {
+            stop();
+            incorrectAnswers++;
+            $("#answerBank").html("<h2> Wrong! The correct answer is: " + question[index].answer + "<h2>")
+        }
+
+
+    })
 
 
 
@@ -95,146 +113,4 @@ $(document).ready(function () {
     // At the end show total number of correct, incorrect and unanswered questions.
     // write a timer that counts down from 20 for each question
 
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // // variables for game
-    // var correctAnswers = 0;
-    // var wrongAnswers = 0;
-    // var unanswered = 0;
-    // var timer = 20;
-    // var userGuess = "";
-    // var gameRunning = false;
-    // var questionCount = questions.length;
-    // var qBank = [];
-    // var answers;
-    // var pick;
-    // var choices = []
-    // // ------------------------------------------
-
-    // // click start button to start game, and when clicked populate a question into #questions.
-    // $("#start").on("click", function () {
-    //     $("#start").hide();
-    //     $("#questions").html(questions);
-    //     displayQuestion();
-    //     for (var i = 0; i < questions.length; i++) {
-    //         qBank.push(questions[i])
-    //     }
-    // });
-
-    // // randomly pick question from array
-    // function displayQuestion() {
-    //     // choose random question from array
-    //     index = Math.floor(Math.random() * questions.length);
-    //     // choose answers from the question chosen
-    //     pick = questions[index];
-    //    if(pick.shown) {
-    //        displayQuestion()
-    //    }
-    //    else {
-    //        $("#questions").html(pick.question);
-    //        for(var i  = 0; i < pick.questions.length; i++) {
-    //            var userChoice = $("<div>");
-    //            userChoice.addclass("answerchoice");
-    //            userChoice.html(pick.choices[i]);
-    //            userChoice.attr("data-guessvalue", i);
-    //            $("#answerBank").append(userChoice);
-    //        }
-    //    }
-    // }
-
-    // // Timer countdown start
-    // function decrement(){
-    //     if (!running) {
-    //         intervalId = setInterval(decrement, 1000);
-    //         running = ture
-    //     }
-
-    // // timer countdown
-    // $("#countdown").html("<p>Time remaining: " + timer +"</p>")
-    // timer --;
-    // // stop timer when it hits 0
-    // if(timer === 0 ) {
-    //     unanswered++;
-    //     stop();
-    //     $("#answerBank").html("<p> Time's Up! The correct answer is: " + choose.questions[choose.answer] + "</p>" );
-    // }
-    // };
-
-    // // reset timer for next question
-    // function timerReset() {
-    //     running = false;
-    //     clearInterval(intervalId);
-    // }
-
-
-
-
