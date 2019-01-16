@@ -5,19 +5,19 @@ $(document).ready(function () {
             choices: ["king Cobra", "Gater Snake", "Rattle Snake", "Water Moccasin"],
             answer: "King Cobra",
             photo: "assets/images/dragon.png"
-    
+
         },
         {
             question: "What is the only mammal born with horns?",
             choices: ["Rhino", "Rams", "Giraffe", "All of these"],
             answer: "Giraffe"
-    
+
         },
         {
             question: "What flightless bird is featured on New Zealand's one dollar coin?",
             choices: ["Dodo", "Emu", "Ostrich", "Kiwi"],
             answer: "Kiwi"
-    
+
         },
         {
             question: "Which of these repiles is known as the worlds largest lizard",
@@ -31,25 +31,25 @@ $(document).ready(function () {
     var correctAnswers = 0;
     var incorrectAnswers = 0;
     var unanswered = 0;
-    var timer = 3;
+    var timer = 8;
     var intervalId;
     var userGuess;
-    var running = false;
+    var running;
     var i = 0;
     var holder = [];
-    
-    
+
+
     // write a startGame function
     $("#start").on("click", function () {
         $("#start").hide();
         $("#countdown").html("<h2>" + timer + "<h2>");
-        runTimer();
-        displayQuestion();
-        running = true;
-        // Make questionsArray appear into HTML document
         for (i = 0; i < questionsArray.length; i++); {
-            holder.push(questionsArray[i]);
+            holder.push(questionsArray[i]); console.log()
+            runTimer();
+            displayQuestion();
         }
+        running = true;
+
     });
 
     // countdown timer
@@ -64,7 +64,7 @@ $(document).ready(function () {
         if (timer === 0) {
             stop();
 
-            $("#countdown").html("<h2>Time's up! <br> The corret answer is: " + questionsArray[randomQuestion].answer + "<h2>" + "<hr>");
+            $("#countdown").html("<h2>Time's up! <br> The corret answer is: " + [randomQuestion].answer + "<h2>" + "<hr>");
             timer = 3;
             randomQuestion++;
         }
@@ -72,9 +72,6 @@ $(document).ready(function () {
     function stop() {
         clearInterval(intervalId);
     }
-
-
-
 
 
     // writes the question to the DOM
@@ -87,19 +84,19 @@ $(document).ready(function () {
             userChoice.attr("class", "userChoices");
             userChoice.text(questionsArray[randomQuestion].choices[i]);
             console.log(questionsArray[randomQuestion].choices[i]);
-            userChoice.attr("data-guessvalue", i);
+            userChoice.attr("data-value", questionsArray[randomQuestion].choices[i]);
             $("#answerBank").append(userChoice);
 
             // Click function for userChoices. 
             $(".userChoices").click(function () {
                 // write correct response
-                userGuess = parseInt($(this).attr("data-guessvalue"));
+                userGuess = ($(this).attr("data-value"));
                 if (userGuess === questionsArray[randomQuestion].answer) {
                     correctAnswers++;
                     stop(); //stops the timer
                     $("#answerBank").html("<h2> Correct! <h2>");
                 }
-                else {
+                else{
                     stop();
                     incorrectAnswers++;
                     $("#answerBank").html("<h2> Wrong!<br> The correct answer is: " + questionsArray[randomQuestion].answer + "<h2>")
@@ -111,22 +108,5 @@ $(document).ready(function () {
         }
     };
 
-
-    // questionsArray about these things:
-    //-----------------------------------
-    // timer function not working properly lines 56-74 timer appears late...IDK
-
-
-    // After userInput: display show a screen that congradulates them, add a timer for 3 seconds then.
-    // move on to next question and reset the timer.
-
-
-
-
-    // Make choices for questionsArray appear under the question
-    // When the user Clicks an answer display show a screen that congradulates them... then move on to the next question.
-    // If the wrong answer is chosen, then tell them they are wrong and show the correct answer.
-    // At the end show total number of correct, incorrect and unanswered questionsArray.
-    // write a timer that counts down from 10 for each question
 
 });
