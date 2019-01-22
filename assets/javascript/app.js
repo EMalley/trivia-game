@@ -2,7 +2,7 @@ $(document).ready(function () {
     var questionsArray = [
         {
             question: "What is the only snake in the world that builds a nest for its eggs?",
-            choices: ["king Cobra", "Gater Snake", "Rattle Snake", "Water Moccasin"],
+            choices: ["King Cobra", "Gater Snake", "Rattle Snake", "Water Moccasin"],
             answer: "King Cobra",
             photo: "assets/images/dragon.png"
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
     var correctAnswers = 0;
     var incorrectAnswers = 0;
     var unanswered = 0;
-    var timer = 8;
+    var timer = 10;
     var intervalId;
     var userGuess;
     var running;
@@ -48,8 +48,6 @@ $(document).ready(function () {
             runTimer();
             displayQuestion();
         }
-        running = true;
-
     });
 
     // countdown timer
@@ -63,10 +61,11 @@ $(document).ready(function () {
         $("#countdown").html("<h2>" + timer + "<h2>");
         if (timer === 0) {
             stop();
-
-            $("#countdown").html("<h2>Time's up! <br> The corret answer is: " + [randomQuestion].answer + "<h2>" + "<hr>");
+            $("#questionBank").hide();
+            $(".userchoices").hide();
+            $("#countdown").html("<h2>Time's up! <br> The corret answer is: " + questionsArray[randomQuestion].answer + "<h2>" + "<hr>");
             timer = 3;
-            randomQuestion++;
+            unanswered++;
         }
     }
     function stop() {
@@ -96,17 +95,24 @@ $(document).ready(function () {
                     stop(); //stops the timer
                     $("#answerBank").html("<h2> Correct! <h2>");
                 }
-                else{
+                else {
                     stop();
                     incorrectAnswers++;
                     $("#answerBank").html("<h2> Wrong!<br> The correct answer is: " + questionsArray[randomQuestion].answer + "<h2>")
                 };
-
-
             })
-
         }
     };
 
+    // if (correctAnswers + incorrectAnswers + unanswered === questionsArray) {
+    //     $("#questionBank").html('<h3>Game Over. Here is how you did</h3>');
+    //     $("#answerBank").append("<h3>Correct: " + correctAnswers + "</h3>");
+    //     $("#answerBank").append("<h3>Incorrect: " + incorrectAnswers + "</h3>");
+    //     $("#answerBank").append("<h3>Unanswered: " + unanswered + "</h3>");
+    // }
+    // else{
+    //     runTimer();
+    //     displayQuestion()
+    // }
 
 });
