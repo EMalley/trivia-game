@@ -61,11 +61,12 @@ $(document).ready(function () {
         $("#countdown").html("<h2>" + timer + "<h2>");
         if (timer === 0) {
             stop();
-            $("#questionBank").hide();
-            $(".userchoices").hide();
-            $("#countdown").html("<h2>Time's up! <br> The corret answer is: " + questionsArray[randomQuestion].answer + "<h2>" + "<hr>");
+            $("#countdown").html("<h2>Time's up! <br> The correct answer is: " + questionsArray[randomQuestion].answer + "<h2>" + "<hr>");
+            $("#questionBank").empty();
+            $(".userchoices").empty();
             timer = 3;
             unanswered++;
+            endGame();
         }
     }
     function stop() {
@@ -93,12 +94,14 @@ $(document).ready(function () {
                     correctAnswers++;
                     stop(); //stops the timer
                     $("#answerBank").html("<h2> Correct! <h2>");
+                    // displayQuestion();
                     endGame();
                 }
                 else {
                     stop();
                     incorrectAnswers++;
                     $("#answerBank").html("<h2> Wrong!<br> The correct answer is: " + questionsArray[randomQuestion].answer + "<h2>");
+                    // displayQuestion();
                     endGame();
                 };
             })
@@ -122,10 +125,11 @@ $(document).ready(function () {
                 $("#questionBank").empty();
                 $("#answerBank").empty();
                 stop();
+                timer = 10;
                 runTimer();
                 displayQuestion();
             }
-        });
+        },3000);
     }
 
 
