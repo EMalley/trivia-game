@@ -72,7 +72,6 @@ $(document).ready(function () {
         clearInterval(intervalId);
     }
 
-
     // writes the question to the DOM
     function displayQuestion() {
         randomQuestion = Math.floor(Math.random() * questionsArray.length);
@@ -94,25 +93,40 @@ $(document).ready(function () {
                     correctAnswers++;
                     stop(); //stops the timer
                     $("#answerBank").html("<h2> Correct! <h2>");
+                    endGame();
                 }
                 else {
                     stop();
                     incorrectAnswers++;
-                    $("#answerBank").html("<h2> Wrong!<br> The correct answer is: " + questionsArray[randomQuestion].answer + "<h2>")
+                    $("#answerBank").html("<h2> Wrong!<br> The correct answer is: " + questionsArray[randomQuestion].answer + "<h2>");
+                    endGame();
                 };
             })
         }
     };
+    // display if all questions are answered then display a score screen, if not then keep asking questions untill there are no more.
+    function endGame() {
+        setTimeout(function () {
+            // $("#questionBank").empty();
+            if (correctAnswers + incorrectAnswers + unanswered === questionsArray) {
+                $("#quesionBank").empty();
+                $("#questionBank").html("<h3>Game Over! Here is how you did: </h3>");
+                $("#answerBank").append("<h4>Correct: " + correctAnswers + "</h4>")
+                $("#answerBank").append("<h4>Incorrect: " + incorrectAnswers + "</h4>");
+                $("#answerBank").append("<h4>Unanswered: " + unanswered + "</h4>");
+                correctAnswers = 0;
+                incorrectAnswers = 0;
+                unanswered = 0;
+            }
+            else {
+                $("#questionBank").empty();
+                $("#answerBank").empty();
+                stop();
+                runTimer();
+                displayQuestion();
+            }
+        });
+    }
 
-    // if (correctAnswers + incorrectAnswers + unanswered === questionsArray) {
-    //     $("#questionBank").html('<h3>Game Over. Here is how you did</h3>');
-    //     $("#answerBank").append("<h3>Correct: " + correctAnswers + "</h3>");
-    //     $("#answerBank").append("<h3>Incorrect: " + incorrectAnswers + "</h3>");
-    //     $("#answerBank").append("<h3>Unanswered: " + unanswered + "</h3>");
-    // }
-    // else{
-    //     runTimer();
-    //     displayQuestion()
-    // }
 
 });
