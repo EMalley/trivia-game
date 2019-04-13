@@ -72,6 +72,7 @@ $(document).ready(function () {
     var running;
     var i = 0;
     var holder = [];
+    var questionNum = 0;
 
 
     // write a startGame function
@@ -92,51 +93,83 @@ $(document).ready(function () {
     }
     function decrement() {
         timer--;
-        unanswered++;
         $("#countdown").html("<h2>" + timer + "<h2>");
         if (timer === 0) {
             stop();
-            $("#questionBank").hide();
-            $(".userchoices").hide();
-            $("#countdown").html("<h2>Time's up! <br> The corret answer is: " + questionsArray[randomQuestion].answer + "<h2>" + "<hr>");
-            timer = 3;
+            $("#countdown").html("<h2>Time's up! <br> The correct answer is: " + questionsArray[questionNum].answer + "<h2>" + "<hr>");
+            $("#questionBank").empty();
+            $(".userchoices").empty();
             unanswered++;
+            endGame();
         }
     }
     function stop() {
         clearInterval(intervalId);
     }
 
-
     // writes the question to the DOM
     function displayQuestion() {
-        randomQuestion = Math.floor(Math.random() * questionsArray.length);
+        // questionNum = Math.floor(Math.random() * questionsArray.length);
 
-        $("#questionBank").html(questionsArray[randomQuestion].question); //console.log(questionsArray[i].question);
-        for (var i = 0; i < questionsArray[randomQuestion].choices.length; i++) {
+        $("#questionBank").html(questionsArray[questionNum].question); //console.log(questionsArray[i].question);
+        for (var i = 0; i < questionsArray[questionNum].choices.length; i++) {
             var userChoice = $("<div>");
             userChoice.attr("class", "userChoices");
-            userChoice.text(questionsArray[randomQuestion].choices[i]);
-            console.log(questionsArray[randomQuestion].choices[i]);
-            userChoice.attr("data-value", questionsArray[randomQuestion].choices[i]);
+            userChoice.text(questionsArray[questionNum].choices[i]);
+            console.log(questionsArray[questionNum].choices[i]);
+            userChoice.attr("data-value", questionsArray[questionNum].choices[i]);
             $("#answerBank").append(userChoice);
-
-            // Click function for userChoices. 
-            $(".userChoices").click(function () {
-                // write correct response
-                userGuess = ($(this).attr("data-value"));
-                if (userGuess === questionsArray[randomQuestion].answer) {
-                    correctAnswers++;
-                    stop(); //stops the timer
-                    $("#answerBank").html("<h2> Correct! <h2>");
-                }
-                else {
-                    stop();
-                    incorrectAnswers++;
-                    $("#answerBank").html("<h2> Wrong!<br> The correct answer is: " + questionsArray[randomQuestion].answer + "<h2>")
-                };
-            })
         }
-    };
 
+        // Click function for userChoices. 
+        $(".userChoices").click(function () {
+            // write correct response
+            userGuess = ($(this).attr("data-value"));
+            if (userGuess === questionsArray[questionNum].answer) {
+                correctAnswers++;
+                stop(); //stops the timer
+                $("#answerBank").html("<h2> Correct! <h2>");
+                endGame();
+            }
+            else {
+                stop();
+                incorrectAnswers++;
+                $("#answerBank").html("<h2> Wrong!<br> The correct answer is: " + questionsArray[questionNum].answer + "<h2>");
+                // displayQuestion();
+                endGame();
+            };
+        })
+    };
+    // display if all questions are answered then display a score screen, if not then keep asking questions untill there are no more. 
+    function endGame() {
+        setTimeout(function () {
+            // $("#questionBank").empty();
+            console.log(correctAnswers, incorrectAnswers, unanswered)
+            if (correctAnswers + incorrectAnswers + unanswered === questionsArray.length) {
+                $("#questionBank").empty();
+                $("#questionBank").html("<h3>Game Over! Here is how you did: </h3>");
+                $("#answerBank").append("<h4>Correct: " + correctAnswers + "</h4>")
+                $("#answerBank").append("<h4>Incorrect: " + incorrectAnswers + "</h4>");
+                $("#answerBank").append("<h4>Unanswered: " + unanswered + "</h4>");
+                questionNum = 0;
+                correctAnswers = 0;
+                incorrectAnswers = 0;
+                unanswered = 0;
+            }
+            else {
+                $("#questionBank").empty();
+                $("#answerBank").empty();
+                stop();
+                timer = 10;
+                runTimer();
+                questionNum++;
+                displayQuestion();
+            }
+        }, 2000);
+    }
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> dfdb4c1bf772630a6f4ac9c2be8c646ddf58f3c1
 });
