@@ -24,6 +24,41 @@ $(document).ready(function () {
             choices: ["Aligator", "Komoto Dragon", "Crocodile", "Bearded Dragon"],
             answer: "Komoto Dragon"
         },
+        {
+            question: "Which of these animals has the longest lifespan?",
+            choices: ["Elephant","Blue Whale","Giant Tortiose","Locust"],
+            answer: "Giant Tortiose"
+        },
+        {
+            question: "What is the only mammal capable of true flight?",
+            choices: ["Bat","Peregrine Falcon","Horned Sungem","Spine-tailed Swift"],
+            answer: "Peregrine Falcon"
+        },
+        {
+            question: "A newborn Kangaroo is about the size of...",
+            choices: ["Watermelon","Lima Bean","Plum","Grapefruit"],
+            answer: "Lima Bean"
+        },
+        {
+            question: "What is the gestation period of a blue whale?",
+            choices: ["4-6 months","10-12 months","16-18 months","2 years"],
+            answer: "10-12 months"
+        },
+        {
+            question: "What is the smallest mammal in the world?",
+            choices: ["Western Harvest Mouse","Numbat","Pygmy Marmoset","Bumblebee Bat"],
+            answer: "Bumblebee Bat"
+        },
+        {
+            question: "What is the worlds most poisonous spider?",
+            choices: ["Brown Recluse","Brazilian Wandering Spider","Sydney Funnel Spider","Black Widow"],
+            answer: "Brazilian Wandering Spider"
+        },
+        {
+            question: "How many times can a hummingbird flap its wings per second?",
+            choices: ["30","160","70","80"],
+            answer: "80"
+        },
     ];
     // ------------------------------------------
     // use object based varibles for each question (reference 'question game')
@@ -103,16 +138,5 @@ $(document).ready(function () {
             })
         }
     };
-
-    // if (correctAnswers + incorrectAnswers + unanswered === questionsArray) {
-    //     $("#questionBank").html('<h3>Game Over. Here is how you did</h3>');
-    //     $("#answerBank").append("<h3>Correct: " + correctAnswers + "</h3>");
-    //     $("#answerBank").append("<h3>Incorrect: " + incorrectAnswers + "</h3>");
-    //     $("#answerBank").append("<h3>Unanswered: " + unanswered + "</h3>");
-    // }
-    // else{
-    //     runTimer();
-    //     displayQuestion()
-    // }
 
 });
