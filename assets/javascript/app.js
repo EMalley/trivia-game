@@ -168,8 +168,4 @@ $(document).ready(function () {
         }, 2000);
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> dfdb4c1bf772630a6f4ac9c2be8c646ddf58f3c1
 });
