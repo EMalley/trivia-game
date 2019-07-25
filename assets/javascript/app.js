@@ -5,7 +5,6 @@ $(document).ready(function () {
             choices: ["King Cobra", "Gater Snake", "Rattle Snake", "Water Moccasin"],
             answer: "King Cobra",
             photo: "assets/images/dragon.png"
-
         },
         {
             question: "What is the only mammal born with horns?",
@@ -69,7 +68,6 @@ $(document).ready(function () {
     var timer = 10;
     var intervalId;
     var userGuess;
-    var running;
     var i = 0;
     var holder = [];
     var questionNum = 0;
@@ -143,10 +141,10 @@ $(document).ready(function () {
     // display if all questions are answered then display a score screen, if not then keep asking questions untill there are no more. 
     function endGame() {
         setTimeout(function () {
-            // $("#questionBank").empty();
             console.log(correctAnswers, incorrectAnswers, unanswered)
             if (correctAnswers + incorrectAnswers + unanswered === questionsArray.length) {
                 $("#questionBank").empty();
+                $("#answerBank").empty();
                 $("#questionBank").html("<h3>Game Over! Here is how you did: </h3>");
                 $("#answerBank").append("<h4>Correct: " + correctAnswers + "</h4>")
                 $("#answerBank").append("<h4>Incorrect: " + incorrectAnswers + "</h4>");
@@ -165,7 +163,7 @@ $(document).ready(function () {
                 questionNum++;
                 displayQuestion();
             }
-        }, 2000);
+        }, 1500);
     }
 
 });
